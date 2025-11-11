@@ -47,8 +47,8 @@ public class BlogApi {
         return ResponseEntity.ok(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(min, max));
     }
 
-    // @GetMapping("/rellenauno")
-    // public ResponseEntity<Long> rellenaBlog() {
-    //     return ResponseEntity.ok(oBlogService.rellenaBlog());
-    // }
+    @GetMapping("/rellenauno")
+    public ResponseEntity<Long> rellenaBlog() {
+        return ResponseEntity.ok(oBlogService.rellenaBlog());
+    }
 }
