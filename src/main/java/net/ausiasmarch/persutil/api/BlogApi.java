@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import net.ausiasmarch.persutil.service.AleatorioService;
 import net.ausiasmarch.persutil.service.BlogService;
+import net.ausiasmarch.persutil.service.PalabrasService;
 
 @RestController
 @RequestMapping("/blog")
@@ -19,6 +20,15 @@ public class BlogApi {
 
     @Autowired
     BlogService oBlogService;
+
+    @Autowired
+    PalabrasService oPalabrasService;
+
+    String[] palabras = {
+        "sol", "luna", "viento", "mar", "montaña", "corre", "salta", "canta", "mira", "piensa", "brillante", "oscuro", 
+        "tranquilo", "rápido", "feliz", "sueño", "camino", "flor", "río", "cielo", "juega", "ama", "busca", "crea", 
+        "vive"
+    };
     
     @GetMapping("/saludar")
     public ResponseEntity<String> saludar() {
@@ -50,5 +60,10 @@ public class BlogApi {
     @GetMapping("/rellenauno")
     public ResponseEntity<Long> rellenaBlog() {
         return ResponseEntity.ok(oBlogService.rellenaBlog());
+    }
+
+    @GetMapping("/palabras")
+    public ResponseEntity<String> palabras() {
+        return ResponseEntity.ok(oPalabrasService.GenerarFrases(palabras));
     }
 }
