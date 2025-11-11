@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/blog")
 public class BlogApi {
     
-    // @GetMapping("/blog")
-    
+    @GetMapping("/saluda")
+    public ResponseEntity<String> saludar() {
+        return new ResponseEntity<>("Hola desde el blog", HttpStatus.OK);
+    }
 }
