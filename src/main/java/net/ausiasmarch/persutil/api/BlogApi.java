@@ -1,12 +1,19 @@
 package net.ausiasmarch.persutil.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import net.ausiasmarch.persutil.entity.BlogEntity;
 import net.ausiasmarch.persutil.service.AleatorioService;
 import net.ausiasmarch.persutil.service.BlogService;
 import net.ausiasmarch.persutil.service.PalabrasService;
@@ -57,13 +64,45 @@ public class BlogApi {
         return ResponseEntity.ok(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(min, max));
     }
 
-    @GetMapping("/rellenauno")
+    // Modificar
+    @GetMapping("/rellenauno") // endpoint
     public ResponseEntity<Long> rellenaBlog() {
         return ResponseEntity.ok(oBlogService.rellenaBlog());
     }
 
-    @GetMapping("/palabras")
+    @GetMapping("/palabras") // endpoint
     public ResponseEntity<String> palabras() {
         return ResponseEntity.ok(oPalabrasService.GenerarFrases(palabras));
     }
+
+    // Crud
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BlogEntity> get(@PathVariable Long id) {
+        return ResponseEntity.ok(oBlogService.get(id));
+    }
+
+    // Crear POSTS
+    @PostMapping("")
+    public ResponseEntity<Long> create(@RequestBody BlogEntity blogEntity) {
+        return ResponseEntity.ok(oBlogService.create(blogEntity));
+    }
+
+    // Modificar POSTS
+    @PutMapping("")
+    public ResponseEntity<Long> update(@RequestBody BlogEntity blogEntity) {
+        return ResponseEntity.ok(oBlogService.update(blogEntity));
+    }
+
+    // Borrar POSTS
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<Long> delete(@RequestBody BlogEntity blogEntity) {
+    //     return ResponseEntity.ok(oBlogService.delete(blogEntity));
+    // }
+
+    // Listado paginado de POSTS
+    // @GetMapping("")
+    // public ResponseEntity<Page<BlogEntity>> getPage(Pageable oPageable) {
+    //     return ResponseEntity.ok(oBlogService.getPage(oPageable));
+    // }
 }
