@@ -77,6 +77,7 @@ public class BlogApi {
 
     // Crud
 
+    // Obtener POSTS por ID
     @GetMapping("/{id}")
     public ResponseEntity<BlogEntity> get(@PathVariable Long id) {
         return ResponseEntity.ok(oBlogService.get(id));
@@ -95,14 +96,19 @@ public class BlogApi {
     }
 
     // Borrar POSTS
-    // @DeleteMapping("/{id}")
-    // public ResponseEntity<Long> delete(@RequestBody BlogEntity blogEntity) {
-    //     return ResponseEntity.ok(oBlogService.delete(blogEntity));
-    // }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long> delete(@RequestBody Long id) {
+        return ResponseEntity.ok(oBlogService.delete(id));
+    }
 
     // Listado paginado de POSTS
-    // @GetMapping("")
-    // public ResponseEntity<Page<BlogEntity>> getPage(Pageable oPageable) {
-    //     return ResponseEntity.ok(oBlogService.getPage(oPageable));
-    // }
+    @GetMapping("")
+    public ResponseEntity<Page<BlogEntity>> getPage(Pageable oPageable) {
+        return ResponseEntity.ok(oBlogService.getPage(oPageable));
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> count() {
+        return ResponseEntity.ok(oBlogService.count()); 
+    }
 }

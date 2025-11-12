@@ -3,6 +3,8 @@ package net.ausiasmarch.persutil.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import net.ausiasmarch.persutil.entity.BlogEntity;
 import net.ausiasmarch.persutil.repository.BlogRepository;
@@ -86,7 +88,16 @@ public class BlogService {
         return existingBlog.getId();
     }
 
-    // Función DELETE
+    public Long delete(Long id) {
+        oBlogRepository.deleteById(id);
+        return id;
+    }
 
-    // Función getPage()
+    public Page<BlogEntity> getPage(Pageable oPageable) {
+        return oBlogRepository.findAll(oPageable);
+    }
+
+    public Long count() {
+        return oBlogRepository.count();
+    }
 }
