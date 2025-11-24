@@ -36,7 +36,7 @@ public class ZanonService {
             // Llamámos al fichero ZanonEntity
             ZanonEntity oZanonEntity = new ZanonEntity();
 
-            // Añadimos un título aleatorio de la lista de rutinas
+            // Establecemos un título aleatorio
             oZanonEntity.setTitulo(
                 rutinas.get(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, rutinas.size() -1))
             );
