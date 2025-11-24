@@ -49,6 +49,8 @@ public class ZanonEntity {
     @NotNull
     @Size(min = 1, max = 255)
     private String categoria;
+    @NotNull
+    private Integer duracion;
 
     public enum Dificultad {
         baja,

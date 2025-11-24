@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: database:3306
--- Tiempo de generación: 20-11-2025 a las 11:02:51
+-- Tiempo de generación: 24-11-2025 a las 11:12:39
 -- Versión del servidor: 8.4.6
 -- Versión de PHP: 8.2.29
 
@@ -96,13 +96,14 @@ CREATE TABLE `zanon` (
   `id` bigint NOT NULL,
   `titulo` varchar(1024) COLLATE utf32_unicode_ci NOT NULL,
   `contenido` longtext COLLATE utf32_unicode_ci NOT NULL,
+  `etiquetas` varchar(1024) COLLATE utf32_unicode_ci NOT NULL,
   `fecha_creacion` datetime NOT NULL,
   `fecha_modificacion` datetime DEFAULT NULL,
   `publico` tinyint(1) NOT NULL,
   `categoria` varchar(255) COLLATE utf32_unicode_ci NOT NULL,
   `duracion` int NOT NULL,
   `dificultad` enum('baja','media','alta') CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
-  `imagen` varchar(255) COLLATE utf32_unicode_ci NOT NULL
+  `imagen` varchar(255) CHARACTER SET utf32 COLLATE utf32_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
 --
