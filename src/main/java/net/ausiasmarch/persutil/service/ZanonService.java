@@ -3,9 +3,11 @@ package net.ausiasmarch.persutil.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import net.ausiasmarch.persutil.entity.ZanonEntity;
 import net.ausiasmarch.persutil.repository.ZanonRepository;
 
+@Service
 public class ZanonService {
 
     @Autowired
