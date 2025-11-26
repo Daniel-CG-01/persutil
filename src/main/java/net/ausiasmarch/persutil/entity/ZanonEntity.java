@@ -45,7 +45,7 @@ public class ZanonEntity {
     private LocalDateTime fechaModificacion;
     
     @NotNull
-    private boolean publico;
+    private int publico;
     @NotNull
     @Size(min = 1, max = 255)
     private String categoria;
