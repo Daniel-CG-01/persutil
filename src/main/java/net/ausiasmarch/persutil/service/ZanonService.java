@@ -97,8 +97,8 @@ public class ZanonService {
             oZanonEntity.setFechaCreacion(LocalDateTime.now());
             oZanonEntity.setFechaModificacion(null);
 
-            // Establecemos si la rutina es pública o no (Público = 1 | Privado = 0)
-            oZanonEntity.setPublico(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1));
+            // Establecemos si la rutina es pública o no (por defecto, la dejamos como true)
+            oZanonEntity.setPublico(true);
 
             // Establecemos la categoría
             oZanonEntity.setCategoria(extraerCategoria(extraerTitulo(rutina)));

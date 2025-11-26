@@ -45,7 +45,7 @@ public class ZanonEntity {
     private LocalDateTime fechaModificacion;
     
     @NotNull
-    private int publico; // Pendiente de cambiar a Boolean
+    private boolean publico;
     @NotNull
     @Size(min = 1, max = 255)
     private String categoria;
