@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import net.ausiasmarch.persutil.entity.ZanonEntity;
 import net.ausiasmarch.persutil.repository.ZanonRepository;
@@ -117,6 +119,43 @@ public class ZanonService {
         }
 
         // Se devuelve el total de registros
+        return oZanonRepository.count();
+    }
+
+    // ------------------------------ CRUD ------------------------------
+
+    public ZanonEntity get(Long id) {
+        return oZanonRepository.findById(id).orElseThrow(() -> new RuntimeException("Blog not found"));
+    }
+
+    public Long create(ZanonEntity zanonEntity) {
+        zanonEntity.setFechaCreacion(LocalDateTime.now());
+        zanonEntity.setFechaModificacion(null);
+        oZanonRepository.save(zanonEntity);
+        return zanonEntity.getId();
+    }
+
+    public Long update(ZanonEntity zanonEntity) {
+        ZanonEntity existingBlog = oZanonRepository.findById(zanonEntity.getId())
+                .orElseThrow(() -> new RuntimeException("Blog not found"));
+        existingBlog.setTitulo(zanonEntity.getTitulo());
+        existingBlog.setContenido(zanonEntity.getContenido());
+        existingBlog.setEtiquetas(zanonEntity.getEtiquetas());
+        existingBlog.setFechaModificacion(LocalDateTime.now());
+        oZanonRepository.save(existingBlog);
+        return existingBlog.getId();
+    }
+
+    public Long delete(Long id) {
+        oZanonRepository.deleteById(id);
+        return id;
+    }
+
+    public Page<ZanonEntity> getPage(Pageable oPageable) {
+        return oZanonRepository.findAll(oPageable);
+    }
+
+    public Long count() {
         return oZanonRepository.count();
     }
 }
