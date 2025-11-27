@@ -60,19 +60,21 @@ public class ZanonService {
 
     private String seleccionarImagen(String titulo) {
         titulo = titulo.toLowerCase();
+        
+        String baseUrl = "http://localhost:8089";
 
         if (titulo.contains("pecho")) {
-            return "/img/pecho.jpg";
+            return baseUrl + "/img/pecho.jpg";
         } else if (titulo.contains("espalda")) {
-            return "/img/espalda.jpg";
+            return baseUrl + "/img/espalda.jpg";
         } else if (titulo.contains("piernas")) {
-            return "/img/piernas.avif";
+            return baseUrl + "/img/piernas.avif";
         } else if (titulo.contains("hombro")) {
-            return "/img/hombro.jpg";
+            return baseUrl + "/img/hombro.jpg";
         } else if (titulo.contains("brazos")) {
-            return "/img/brazos.avif";
+            return baseUrl + "/img/brazos.avif";
         } else {
-            return "/img/fullbody.jpeg";
+            return baseUrl + "/img/fullbody.jpeg";
         }
     }
 
