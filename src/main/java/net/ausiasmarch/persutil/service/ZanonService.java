@@ -58,21 +58,21 @@ public class ZanonService {
                  .collect(Collectors.joining(", "));
     }
 
-    private String extraerCategoria(String titulo) {
+    private String seleccionarImagen(String titulo) {
         titulo = titulo.toLowerCase();
 
         if (titulo.contains("pecho")) {
-            return "pecho";
+            return "/img/pecho.jpg";
         } else if (titulo.contains("espalda")) {
-            return "espalda";
+            return "/img/espalda.jpg";
         } else if (titulo.contains("piernas")) {
-            return "piernas";
+            return "/img/piernas.avif";
         } else if (titulo.contains("hombro")) {
-            return "hombro";
+            return "/img/hombro.jpg";
         } else if (titulo.contains("brazos")) {
-            return "brazos";
+            return "/img/brazos.avif";
         } else {
-            return "full body";
+            return "/img/fullbody.jpeg";
         }
     }
 
@@ -99,20 +99,14 @@ public class ZanonService {
             oZanonEntity.setFechaCreacion(LocalDateTime.now());
             oZanonEntity.setFechaModificacion(null);
 
-            // Establecemos si la rutina es pública o no (Públco = 1 | Privado = 0)
-            oZanonEntity.setPublico(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1));
-
-            // Establecemos la categoría
-            oZanonEntity.setCategoria(extraerCategoria(extraerTitulo(rutina)));
-
             // Establecemos una duración aleatoria
             oZanonEntity.setDuracion(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(5, 60));
 
             // Establecemos una dificultad aleatoria
             oZanonEntity.setDificultad(dificultades[oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, dificultades.length - 1)]);
 
-            // Establecemos una imagen (como es opcional, la dejamos como null)
-            oZanonEntity.setImagen(null);
+            // Establecemos una imagen
+            oZanonEntity.setImagen(seleccionarImagen(extraerTitulo(rutina)));
 
             // Lo guardamos todo en la base de datos
             oZanonRepository.save(oZanonEntity);

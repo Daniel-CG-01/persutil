@@ -45,11 +45,6 @@ public class ZanonEntity {
     private LocalDateTime fechaModificacion;
     
     @NotNull
-    private int publico;
-    @NotNull
-    @Size(min = 1, max = 255)
-    private String categoria;
-    @NotNull
     private Integer duracion;
 
     public enum Dificultad {
@@ -61,6 +56,6 @@ public class ZanonEntity {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Dificultad dificultad;
-    @Nullable
+    @NotNull
     private String imagen;
 }
