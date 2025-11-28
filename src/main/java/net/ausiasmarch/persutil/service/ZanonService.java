@@ -152,4 +152,27 @@ public class ZanonService {
     public Long count() {
         return oZanonRepository.count();
     }
+
+    public int rellenarRutinas(int numPosts) {
+        ZanonEntity.Dificultad[] dificultades = ZanonEntity.Dificultad.values();
+
+        for (int i = 0; i < numPosts; i++) {
+            ZanonEntity oZanonEntity = new ZanonEntity();
+
+            String rutina = rutinas.get(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, rutinas.size() -1));
+
+            oZanonEntity.setTitulo(extraerTitulo(rutina));
+            oZanonEntity.setContenido(extraerContenido(rutina));
+            oZanonEntity.setEtiquetas(extraerEtiquetas(extraerContenido(rutina)));
+            oZanonEntity.setFechaCreacion(LocalDateTime.now());
+            oZanonEntity.setFechaModificacion(null);
+            oZanonEntity.setDuracion(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(5, 60));
+            oZanonEntity.setDificultad(dificultades[oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, dificultades.length - 1)]);
+            oZanonEntity.setImagen(seleccionarImagen(extraerTitulo(rutina)));
+
+            oZanonRepository.save(oZanonEntity);
+        }
+
+        return numPosts;
+    }
 }

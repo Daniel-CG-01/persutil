@@ -31,6 +31,14 @@ public class ZanonApi {
         return ResponseEntity.ok(oZanonService.registroRutinas(numPosts));
     }
 
+    @GetMapping("/rellena/{numPosts}")
+    public ResponseEntity<Integer> rellenar(
+            @PathVariable int numPosts
+    ) {
+        int rutinasCreadas = oZanonService.rellenarRutinas(numPosts);
+        return ResponseEntity.ok(rutinasCreadas);
+    }
+
     // ------------------------------ CRUD ------------------------------
 
     // Obtener POST por ID
