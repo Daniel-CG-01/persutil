@@ -59,6 +59,10 @@ public class ZanonService {
     }
 
     private String seleccionarImagen(String titulo) {
+        if (titulo == null || titulo.trim().isEmpty()) {
+            return "/img/fullbody.jpeg";
+        }
+        
         titulo = titulo.toLowerCase();
 
         if (titulo.contains("pecho")) {
