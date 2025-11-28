@@ -132,6 +132,13 @@ public class ZanonService {
     }
 
     public Long create(ZanonEntity zanonEntity) {
+
+        // Si la imagen es nula, se le asigna una siguiendo la misma lógica que en registroRutinas()
+        if (zanonEntity.getImagen() == null) {
+            String titulo = zanonEntity.getTitulo();
+            zanonEntity.setImagen(seleccionarImagen(titulo));
+        }
+
         zanonEntity.setFechaCreacion(LocalDateTime.now());
         zanonEntity.setFechaModificacion(null);
         oZanonRepository.save(zanonEntity);
@@ -145,6 +152,9 @@ public class ZanonService {
         existingBlog.setContenido(zanonEntity.getContenido());
         existingBlog.setEtiquetas(zanonEntity.getEtiquetas());
         existingBlog.setFechaModificacion(LocalDateTime.now());
+        existingBlog.setDuracion(zanonEntity.getDuracion());
+        existingBlog.setDificultad(zanonEntity.getDificultad());
+        existingBlog.setPublico(zanonEntity.getPublico());
         oZanonRepository.save(existingBlog);
         return existingBlog.getId();
     }
