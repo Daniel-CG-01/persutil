@@ -185,4 +185,8 @@ public class ZanonService {
 
         return numPosts;
     }
+
+    public Page<ZanonEntity> buscador(String texto, Pageable oPageable) {
+        return oZanonRepository.buscador(texto, oPageable);
+    }
 }

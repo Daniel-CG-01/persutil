@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import net.ausiasmarch.persutil.entity.ZanonEntity;
 import net.ausiasmarch.persutil.service.ZanonService;
@@ -37,6 +38,14 @@ public class ZanonApi {
     ) {
         int rutinasCreadas = oZanonService.rellenarRutinas(numPosts);
         return ResponseEntity.ok(rutinasCreadas);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<ZanonEntity>> buscador(
+            @RequestParam String texto,
+            Pageable oPageable
+    ) {
+        return ResponseEntity.ok(oZanonService.buscador(texto, oPageable));
     }
 
     // ------------------------------ CRUD ------------------------------
