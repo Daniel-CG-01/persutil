@@ -178,6 +178,7 @@ public class ZanonService {
             oZanonEntity.setDuracion(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(5, 60));
             oZanonEntity.setDificultad(dificultades[oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, dificultades.length - 1)]);
             oZanonEntity.setImagen(seleccionarImagen(extraerTitulo(rutina)));
+            oZanonEntity.setPublico(esPublico(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1)));
 
             oZanonRepository.save(oZanonEntity);
         }
