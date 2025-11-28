@@ -58,4 +58,7 @@ public class ZanonEntity {
     private Dificultad dificultad;
     @NotNull
     private String imagen;
+
+    @NotNull
+    private Boolean publico;
 }

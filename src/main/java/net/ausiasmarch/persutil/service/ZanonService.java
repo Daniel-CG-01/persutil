@@ -76,6 +76,12 @@ public class ZanonService {
         }
     }
 
+    private Boolean esPublico(int num) {
+        
+        // Si "num" es 1, devuelve "true". Pero si no lo es, devuelve "false"
+        return num == 1;
+    }
+
     public Long registroRutinas(Long numPosts) {
         ZanonEntity.Dificultad[] dificultades = ZanonEntity.Dificultad.values();
 
@@ -107,6 +113,9 @@ public class ZanonService {
 
             // Establecemos una imagen
             oZanonEntity.setImagen(seleccionarImagen(extraerTitulo(rutina)));
+
+            // Establecemos si la rutina es pública o no
+            oZanonEntity.setPublico(esPublico(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1)));
 
             // Lo guardamos todo en la base de datos
             oZanonRepository.save(oZanonEntity);
