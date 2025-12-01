@@ -56,8 +56,6 @@ public class ZanonEntity {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Dificultad dificultad;
-    @NotNull
-    private String imagen;
 
     @NotNull
     private Boolean publico;

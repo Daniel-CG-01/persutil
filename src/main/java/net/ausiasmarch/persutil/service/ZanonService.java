@@ -58,24 +58,6 @@ public class ZanonService {
                  .collect(Collectors.joining(", "));
     }
 
-    private String seleccionarImagen(String titulo) {
-        titulo = titulo.toLowerCase();
-
-        if (titulo.contains("pecho")) {
-            return "/img/pecho.jpg";
-        } else if (titulo.contains("espalda")) {
-            return "/img/espalda.jpg";
-        } else if (titulo.contains("piernas")) {
-            return "/img/piernas.avif";
-        } else if (titulo.contains("hombro")) {
-            return "/img/hombro.jpg";
-        } else if (titulo.contains("brazos")) {
-            return "/img/brazos.avif";
-        } else {
-            return "/img/fullbody.jpeg";
-        }
-    }
-
     private Boolean esPublico(int num) {
         
         // Si "num" es 1, devuelve "true". Pero si no lo es, devuelve "false"
@@ -111,9 +93,6 @@ public class ZanonService {
             // Establecemos una dificultad aleatoria
             oZanonEntity.setDificultad(dificultades[oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, dificultades.length - 1)]);
 
-            // Establecemos una imagen
-            oZanonEntity.setImagen(seleccionarImagen(extraerTitulo(rutina)));
-
             // Establecemos si la rutina es pública o no
             oZanonEntity.setPublico(esPublico(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1)));
 
@@ -132,13 +111,6 @@ public class ZanonService {
     }
 
     public Long create(ZanonEntity zanonEntity) {
-
-        // Si la imagen es nula, se le asigna una siguiendo la misma lógica que en registroRutinas()
-        if (zanonEntity.getImagen() == null) {
-            String titulo = zanonEntity.getTitulo();
-            zanonEntity.setImagen(seleccionarImagen(titulo));
-        }
-
         zanonEntity.setFechaCreacion(LocalDateTime.now());
         zanonEntity.setFechaModificacion(null);
         oZanonRepository.save(zanonEntity);
@@ -187,7 +159,6 @@ public class ZanonService {
             oZanonEntity.setFechaModificacion(null);
             oZanonEntity.setDuracion(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(5, 60));
             oZanonEntity.setDificultad(dificultades[oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, dificultades.length - 1)]);
-            oZanonEntity.setImagen(seleccionarImagen(extraerTitulo(rutina)));
             oZanonEntity.setPublico(esPublico(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1)));
 
             oZanonRepository.save(oZanonEntity);
