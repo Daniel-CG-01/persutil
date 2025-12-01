@@ -413,3 +413,29 @@ ALTER TABLE `soares`
 ALTER TABLE `tarea`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 COMMIT;
+
+-- Estructura de tabla para la tabla `gallery_image`
+CREATE TABLE `gallery_image` (
+  `id` bigint NOT NULL,
+  `titulo` varchar(1024) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `descripcion` longtext CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `url_imagen` varchar(2048) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
+  `publicado` tinyint(1) NOT NULL DEFAULT '0',
+  `fecha_creacion` datetime NOT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+-- Indices de la tabla `gallery_image`
+ALTER TABLE `gallery_image`
+  ADD PRIMARY KEY (`id`);
+
+-- AUTO_INCREMENT
+ALTER TABLE `gallery_image`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+
+
+
+
+
+
+
