@@ -11,7 +11,7 @@ public class JWTHelper {
         return Jwts.builder()
                 .setIssuer("ausiasmarch.net")
                 .setSubject("DAWsiasmarchPERSUTIL")
-                .claim(username, username)
+                .claim("username", username)
                 .setIssuedAt(new java.util.Date())
                 .setExpiration(new java.util.Date(System.currentTimeMillis() + 10800000)) // 3 horas
                 .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
