@@ -12,40 +12,34 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "blog")
+@Table(name = "recurso")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlogEntity {
-
+public class PavonEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
     @Size(min = 3, max = 1024)
-    private String titulo;
+    private String nombre;
     @NotNull
     @Size(min = 3)
-    private String contenido;
-    @NotNull
-    @Size(min = 3, max = 1024)
-    private String etiquetas;
-    @BooleanFlag
-    private Boolean publicado;
+    private String url;
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime fechaCreacion;
     @Nullable
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime fechaModificacion;
-
+    @NotNull
+    private boolean publico;
 }
-

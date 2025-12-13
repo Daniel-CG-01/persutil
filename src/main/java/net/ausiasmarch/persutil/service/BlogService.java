@@ -20,6 +20,9 @@ public class BlogService {
     @Autowired
     AleatorioService oAleatorioService;
 
+    @Autowired
+    SessionService oSessionService;
+
     ArrayList<String> alFrases = new ArrayList<>();
 
     public BlogService() {
@@ -42,6 +45,11 @@ public class BlogService {
     }
 
     public Long rellenaBlog(Long numPosts) {
+
+        if (!oSessionService.isSessionActive()) {
+            throw new RuntimeException("No active session");
+        }
+
         for (long j = 0; j < numPosts; j++) {
             // crea entity blog y la rellana con datos aleatorios
             BlogEntity oBlogEntity = new BlogEntity();
@@ -90,6 +98,8 @@ public class BlogService {
             // establecer fecha de creación y modificación
             oBlogEntity.setFechaCreacion(LocalDateTime.now());
             oBlogEntity.setFechaModificacion(null);
+            // poner la flag de publicado aleatoriamente
+            oBlogEntity.setPublicado(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1) == 1);
             // guardar entity en base de datos
             oBlogRepository.save(oBlogEntity);
         }
@@ -102,6 +112,9 @@ public class BlogService {
     }
 
     public Long create(BlogEntity blogEntity) {
+        if (!oSessionService.isSessionActive()) {
+            throw new RuntimeException("No active session");
+        }
         blogEntity.setFechaCreacion(LocalDateTime.now());
         blogEntity.setFechaModificacion(null);
         oBlogRepository.save(blogEntity);
@@ -109,6 +122,9 @@ public class BlogService {
     }
 
     public Long update(BlogEntity blogEntity) {
+        if (!oSessionService.isSessionActive()) {
+            throw new RuntimeException("No active session");
+        }
         BlogEntity existingBlog = oBlogRepository.findById(blogEntity.getId())
                 .orElseThrow(() -> new RuntimeException("Blog not found"));
         existingBlog.setTitulo(blogEntity.getTitulo());
@@ -120,6 +136,9 @@ public class BlogService {
     }
 
     public Long delete(Long id) {
+        if (!oSessionService.isSessionActive()) {
+            throw new RuntimeException("No active session");
+        }
         oBlogRepository.deleteById(id);
         return id;
     }

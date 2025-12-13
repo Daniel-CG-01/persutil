@@ -4,48 +4,53 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "blog")
+@Table(name = "ideas")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlogEntity {
+public class FernandezIdeaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+    
     @NotNull
-    @Size(min = 3, max = 1024)
+    @Size(min = 1, max = 255)
     private String titulo;
+    
     @NotNull
-    @Size(min = 3)
-    private String contenido;
+    @Size(min = 1)
+    private String comentario;
+    
     @NotNull
-    @Size(min = 3, max = 1024)
-    private String etiquetas;
-    @BooleanFlag
-    private Boolean publicado;
+    @Enumerated(EnumType.STRING)
+    private CategoriaEnum categoria;
+    
+    @NotNull
+    private Boolean publico;
+    
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime fechaCreacion;
-    @Nullable
+    
+    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime fechaModificacion;
 
 }
-

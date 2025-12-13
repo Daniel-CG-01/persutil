@@ -12,40 +12,43 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "blog")
+@Table(name = "jspreguntas")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlogEntity {
+public class AlcanyizEntity{
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
     @Size(min = 3, max = 1024)
-    private String titulo;
+    private String question;
     @NotNull
-    @Size(min = 3)
-    private String contenido;
+    @Size(max = 1024)
+    private String answer1;
     @NotNull
-    @Size(min = 3, max = 1024)
-    private String etiquetas;
-    @BooleanFlag
-    private Boolean publicado;
+    @Size(max = 1024)
+    private String answer2;
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime fechaCreacion;
+    @Size(max = 1024)
+    private String answer3;
+    @NotNull
+    @Size(max = 1024)
+    private String answer4;
+    @NotNull
+    private long correct;
     @Nullable
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime fechaModificacion;
-
+    private LocalDateTime create_date;
+    @Nullable
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    private LocalDateTime modify_date;
 }
-

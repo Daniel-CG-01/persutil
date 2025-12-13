@@ -12,21 +12,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "blog")
+@Table(name = "contreras")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlogEntity {
-
-    @Id
+public class ContrerasEntity {
+    
+   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
@@ -38,14 +37,12 @@ public class BlogEntity {
     @NotNull
     @Size(min = 3, max = 1024)
     private String etiquetas;
-    @BooleanFlag
-    private Boolean publicado;
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime fechaCreacion;
     @Nullable
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime fechaModificacion;
-
+    @NotNull
+    private boolean publico = false;
 }
-

@@ -10,42 +10,53 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jdk.jfr.BooleanFlag;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Table(name = "blog")
-@Getter
-@Setter
+@Table(name="sempertegui_pelicula")
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class BlogEntity {
-
+public class SemperteguiEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @NotNull
-    @Size(min = 3, max = 1024)
-    private String titulo;
+    @Size(min=2, max=255)
+    private String nombre;
+
     @NotNull
-    @Size(min = 3)
-    private String contenido;
+    @Size(min=3, max=255)
+    private String genero;
+
     @NotNull
-    @Size(min = 3, max = 1024)
-    private String etiquetas;
-    @BooleanFlag
-    private Boolean publicado;
+    @Size(min=3, max=255)
+    private String director;
+
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    private int puntuacion;
+
+    @NotNull
+    @Min(1901)
+    @Max(2155)
+    private int anyo;
+
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape=JsonFormat.Shape.STRING)
     private LocalDateTime fechaCreacion;
+
     @Nullable
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape=JsonFormat.Shape.STRING)
     private LocalDateTime fechaModificacion;
 
-}
+    // @NotNull
+    // @Lob
+    // private byte[] portada;
 
+}
