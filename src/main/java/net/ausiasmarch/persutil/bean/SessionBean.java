@@ -13,4 +13,5 @@ public class SessionBean {
 
     private String username;
     private String password;
+
 }
