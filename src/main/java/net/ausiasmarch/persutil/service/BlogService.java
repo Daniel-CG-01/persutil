@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import net.ausiasmarch.persutil.entity.BlogEntity;
+import net.ausiasmarch.persutil.exception.ResourceNotFoundException;
+import net.ausiasmarch.persutil.exception.UnauthorizedException;
 import net.ausiasmarch.persutil.repository.BlogRepository;
 
 @Service
@@ -47,7 +49,7 @@ public class BlogService {
     public Long rellenaBlog(Long numPosts) {
 
         if (!oSessionService.isSessionActive()) {
-            throw new RuntimeException("No active session");
+            throw new UnauthorizedException("No active session");
         }
 
         for (long j = 0; j < numPosts; j++) {
@@ -112,12 +114,20 @@ public class BlogService {
 
     // ----------------------------CRUD---------------------------------
     public BlogEntity get(Long id) {
-        return oBlogRepository.findById(id).orElseThrow(() -> new RuntimeException("Blog not found"));
+        if (oSessionService.isSessionActive()) {
+            return oBlogRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+        } else{
+            BlogEntity blogEntity = oBlogRepository.findByIdAndPublicadoTrue(id);
+            if (blogEntity == null) {
+                throw new ResourceNotFoundException("Post not found or not published");
+            }
+            return blogEntity;
+        }
     }
 
     public Long create(BlogEntity blogEntity) {
         if (!oSessionService.isSessionActive()) {
-            throw new RuntimeException("No active session");
+            throw new UnauthorizedException("No active session");
         }
         blogEntity.setFechaCreacion(LocalDateTime.now());
         blogEntity.setFechaModificacion(null);
@@ -127,10 +137,10 @@ public class BlogService {
 
     public Long update(BlogEntity blogEntity) {
         if (!oSessionService.isSessionActive()) {
-            throw new RuntimeException("No active session");
+            throw new UnauthorizedException("No active session");
         }
         BlogEntity existingBlog = oBlogRepository.findById(blogEntity.getId())
-                .orElseThrow(() -> new RuntimeException("Blog not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
         existingBlog.setTitulo(blogEntity.getTitulo());
         existingBlog.setContenido(blogEntity.getContenido());
         existingBlog.setEtiquetas(blogEntity.getEtiquetas());
@@ -142,7 +152,7 @@ public class BlogService {
 
     public Long delete(Long id) {
         if (!oSessionService.isSessionActive()) {
-            throw new RuntimeException("No active session");
+            throw new UnauthorizedException("No active session");
         }
         oBlogRepository.deleteById(id);
         return id;
@@ -151,7 +161,7 @@ public class BlogService {
     public Page<BlogEntity> getPage(Pageable oPageable) {
         // si no hay session activa, solo devolver los publicados
         if (!oSessionService.isSessionActive()) {
-            return oBlogRepository.findByPublicadoTrue(oPageable);            
+            return oBlogRepository.findByPublicadoTrue(oPageable);
         } else {
             return oBlogRepository.findAll(oPageable);
         }
@@ -162,13 +172,12 @@ public class BlogService {
     }
 
     // ---
-
     public Long publicar(Long id) {
         if (!oSessionService.isSessionActive()) {
-            throw new RuntimeException("No active session");
+            throw new UnauthorizedException("No active session");
         }
         BlogEntity existingBlog = oBlogRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
         existingBlog.setPublicado(true);
         existingBlog.setFechaModificacion(LocalDateTime.now());
         oBlogRepository.save(existingBlog);
@@ -177,10 +186,10 @@ public class BlogService {
 
     public Long despublicar(Long id) {
         if (!oSessionService.isSessionActive()) {
-            throw new RuntimeException("No active session");
+            throw new UnauthorizedException("No active session");
         }
         BlogEntity existingBlog = oBlogRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
         existingBlog.setPublicado(false);
         existingBlog.setFechaModificacion(LocalDateTime.now());
         oBlogRepository.save(existingBlog);

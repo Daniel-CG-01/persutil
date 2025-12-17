@@ -6,18 +6,19 @@ import org.springframework.stereotype.Service;
 import net.ausiasmarch.persutil.bean.SessionBean;
 import net.ausiasmarch.persutil.bean.TokenBean;
 
+
 @Service
 public class SessionService {
 
     @Autowired
-    private JWTService oJWTService;
+    private JWTService oJwtService;
 
     public TokenBean login(SessionBean oSessionBean) {
         // Lógica de autenticación aquí
         // hardcoded
         if ("admin".equals(oSessionBean.getUsername()) && "7e4b4f5529e084ecafb996c891cfbd5b5284f5b00dc155c37bbb62a9f161a72e".equalsIgnoreCase(oSessionBean.getPassword())) { //ausias
             // generar el token JWT
-            return (new TokenBean(oJWTService.generateJWT(oSessionBean.getUsername())));
+            return (new TokenBean(oJwtService.generateJWT(oSessionBean.getUsername())));
         } else {
             return null; // Autenticación fallida Rafa -> cambiar por excepcion
         }

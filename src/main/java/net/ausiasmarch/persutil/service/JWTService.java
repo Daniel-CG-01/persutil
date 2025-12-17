@@ -10,13 +10,11 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JWTService {
-    
+
     @Value("${jwt.secret}")
     private String SECRET_KEY;
-
     @Value("${jwt.issuer}")
     private String ISSUER;
-
     @Value("${jwt.subject}")
     private String SUBJECT;
 
@@ -65,4 +63,5 @@ public class JWTService {
                 .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
                 .compact();
     }
+
 }
