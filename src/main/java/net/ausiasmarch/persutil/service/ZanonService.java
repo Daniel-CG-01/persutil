@@ -4,10 +4,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import net.ausiasmarch.persutil.entity.ZanonEntity;
 import net.ausiasmarch.persutil.repository.ZanonRepository;
 
@@ -95,10 +97,7 @@ public class ZanonService {
 
             // Establecemos si la rutina es pública o no
             oZanonEntity.setPublico(esPublico(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1)));
-
-            // Establecemos una imagen por defecto
-            oZanonEntity.setImagen("https://avena.io/blog/wp-content/uploads/2023/09/Guia-completa-y-efectiva-para-tu-rutina-de-ejercicios-todo-lo-que-necesitas-saber-1.jpg");
-
+            
             // Lo guardamos todo en la base de datos
             oZanonRepository.save(oZanonEntity);
         }
@@ -116,6 +115,12 @@ public class ZanonService {
     public Long create(ZanonEntity zanonEntity) {
         zanonEntity.setFechaCreacion(LocalDateTime.now());
         zanonEntity.setFechaModificacion(null);
+
+        // Si la imagen viene vacía o nula, establecemos una por defecto
+        if (zanonEntity.getImagen() == null || zanonEntity.getImagen().isEmpty()) {
+            zanonEntity.setImagen("https://avena.io/blog/wp-content/uploads/2023/09/Guia-completa-y-efectiva-para-tu-rutina-de-ejercicios-todo-lo-que-necesitas-saber-1.jpg");
+        }
+
         oZanonRepository.save(zanonEntity);
         return zanonEntity.getId();
     }
@@ -130,6 +135,7 @@ public class ZanonService {
         existingBlog.setDuracion(zanonEntity.getDuracion());
         existingBlog.setDificultad(zanonEntity.getDificultad());
         existingBlog.setPublico(zanonEntity.getPublico());
+        existingBlog.setImagen(zanonEntity.getImagen());
         oZanonRepository.save(existingBlog);
         return existingBlog.getId();
     }

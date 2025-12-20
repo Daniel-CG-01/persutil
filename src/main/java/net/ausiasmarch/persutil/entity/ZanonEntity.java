@@ -61,5 +61,5 @@ public class ZanonEntity {
     private Boolean publico;
 
     @NotNull
-    private String imagen;
+    private String imagen = "https://avena.io/blog/wp-content/uploads/2023/09/Guia-completa-y-efectiva-para-tu-rutina-de-ejercicios-todo-lo-que-necesitas-saber-1.jpg";
 }
