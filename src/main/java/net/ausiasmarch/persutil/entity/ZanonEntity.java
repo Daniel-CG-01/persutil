@@ -59,4 +59,7 @@ public class ZanonEntity {
 
     @NotNull
     private Boolean publico;
+
+    @NotNull
+    private String imagen;
 }

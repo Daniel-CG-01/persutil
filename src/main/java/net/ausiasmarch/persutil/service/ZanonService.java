@@ -96,6 +96,9 @@ public class ZanonService {
             // Establecemos si la rutina es pública o no
             oZanonEntity.setPublico(esPublico(oAleatorioService.GenerarNumeroAleatorioEnteroEnRango(0, 1)));
 
+            // Establecemos una imagen por defecto
+            oZanonEntity.setImagen("https://avena.io/blog/wp-content/uploads/2023/09/Guia-completa-y-efectiva-para-tu-rutina-de-ejercicios-todo-lo-que-necesitas-saber-1.jpg");
+
             // Lo guardamos todo en la base de datos
             oZanonRepository.save(oZanonEntity);
         }
