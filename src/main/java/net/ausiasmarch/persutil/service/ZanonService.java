@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import net.ausiasmarch.persutil.entity.ZanonEntity;
+import net.ausiasmarch.persutil.exception.ResourceNotFoundException;
+import net.ausiasmarch.persutil.exception.UnauthorizedException;
 import net.ausiasmarch.persutil.repository.ZanonRepository;
 
 @Service
@@ -21,6 +23,9 @@ public class ZanonService {
 
     @Autowired
     ZanonRepository oZanonRepository;
+
+    @Autowired
+    SessionService oSessionService;
 
     ArrayList<String> rutinas = new ArrayList<>();
 
@@ -109,10 +114,24 @@ public class ZanonService {
     // ------------------------------ CRUD ------------------------------
 
     public ZanonEntity get(Long id) {
-        return oZanonRepository.findById(id).orElseThrow(() -> new RuntimeException("Blog not found"));
+        if (oSessionService.isSessionActive()) {
+            return oZanonRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+        } else{
+            ZanonEntity oZanonEntity = oZanonRepository.findByIdAndPublicoTrue(id);
+
+            if (oZanonEntity == null) {
+                throw new ResourceNotFoundException("Post not found or not published");
+            }
+
+            return oZanonEntity;
+        }
     }
 
     public Long create(ZanonEntity zanonEntity) {
+        if (!oSessionService.isSessionActive()) {
+            throw new UnauthorizedException("No active session");
+        }
+        
         zanonEntity.setFechaCreacion(LocalDateTime.now());
         zanonEntity.setFechaModificacion(null);
 
@@ -126,6 +145,10 @@ public class ZanonService {
     }
 
     public Long update(ZanonEntity zanonEntity) {
+        if (!oSessionService.isSessionActive()) {
+            throw new UnauthorizedException("No active session");
+        }
+
         ZanonEntity existingBlog = oZanonRepository.findById(zanonEntity.getId())
                 .orElseThrow(() -> new RuntimeException("Blog not found"));
         existingBlog.setTitulo(zanonEntity.getTitulo());
@@ -141,12 +164,22 @@ public class ZanonService {
     }
 
     public Long delete(Long id) {
+        if (!oSessionService.isSessionActive()) {
+            throw new UnauthorizedException("No active session");
+        }
+
         oZanonRepository.deleteById(id);
         return id;
     }
 
     public Page<ZanonEntity> getPage(Pageable oPageable) {
-        return oZanonRepository.findAll(oPageable);
+        
+        // Si no hay session activa, solo devuelve los publicados
+        if (!oSessionService.isSessionActive()) {
+            return oZanonRepository.findByPublicoTrue(oPageable);
+        } else {
+            return oZanonRepository.findAll(oPageable);
+        }
     }
 
     public Long count() {
@@ -174,5 +207,39 @@ public class ZanonService {
         }
 
         return numPosts;
+    }
+
+    public Long publicar(Long id) {
+        if (!oSessionService.isSessionActive()) {
+            throw new UnauthorizedException("No active session");
+        }
+        ZanonEntity oExistingBlog = oZanonRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+        oExistingBlog.setPublico(true);
+        oExistingBlog.setFechaModificacion(LocalDateTime.now());
+        oZanonRepository.save(oExistingBlog);
+        return oExistingBlog.getId();
+    }
+
+    public Long despublicar(Long id) {
+        if (!oSessionService.isSessionActive()) {
+            throw new UnauthorizedException("No active session");
+        }
+        ZanonEntity oExistingBlog = oZanonRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+        oExistingBlog.setPublico(false);
+        oExistingBlog.setFechaModificacion(LocalDateTime.now());
+        oZanonRepository.save(oExistingBlog);
+        return oExistingBlog.getId();
+    }
+
+    public Long empty() {
+        if (!oSessionService.isSessionActive()) {
+            throw new UnauthorizedException("No active session");
+        }
+
+        Long total = oZanonRepository.count();
+        oZanonRepository.deleteAll();
+        return total;
     }
 }

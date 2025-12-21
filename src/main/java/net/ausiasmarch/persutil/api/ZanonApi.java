@@ -76,4 +76,22 @@ public class ZanonApi {
     public ResponseEntity<Long> count() {
         return ResponseEntity.ok(oZanonService.count()); 
     }
+
+    // Vaciar la tabla (solo administradores)
+    @DeleteMapping("/empty")
+    public ResponseEntity<Long> empty() {
+        return ResponseEntity.ok(oZanonService.empty());
+    }
+
+    // Publicar POST
+    @PutMapping("/publicar/{id}")
+    public ResponseEntity<Long> publicar(@PathVariable Long id) {
+        return ResponseEntity.ok(oZanonService.publicar(id));
+    }
+
+    // Despublicar POST
+    @PutMapping("/despublicar/{id}")
+    public ResponseEntity<Long> despublicar(@PathVariable Long id) {
+        return ResponseEntity.ok(oZanonService.despublicar(id));
+    }
 }
