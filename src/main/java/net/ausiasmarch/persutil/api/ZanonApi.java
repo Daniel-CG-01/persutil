@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import net.ausiasmarch.persutil.entity.ZanonEntity;
 import net.ausiasmarch.persutil.service.ZanonService;
@@ -67,9 +68,10 @@ public class ZanonApi {
 
     // Listado paginado de POSTS
     @GetMapping("")
-    public ResponseEntity<Page<ZanonEntity>> getPage(Pageable oPageable) {
-        return ResponseEntity.ok(oZanonService.getPage(oPageable));
-        
+    public ResponseEntity<Page<ZanonEntity>> getPage(
+        Pageable oPageable,
+        @RequestParam(name = "publico", required = false) Boolean publico) {
+        return ResponseEntity.ok(oZanonService.getPage(oPageable, publico));
     }
 
     @GetMapping("/count")

@@ -172,7 +172,10 @@ public class ZanonService {
         return id;
     }
 
-    public Page<ZanonEntity> getPage(Pageable oPageable) {
+    public Page<ZanonEntity> getPage(Pageable oPageable, Boolean publico) {
+        if (Boolean.TRUE.equals(publico)) {
+            return oZanonRepository.findByPublicoTrue(oPageable);
+        }
         
         // Si no hay session activa, solo devuelve los publicados
         if (!oSessionService.isSessionActive()) {
